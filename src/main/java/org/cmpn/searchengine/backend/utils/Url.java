@@ -1,4 +1,4 @@
-package org.cmpn.searchengine.backend;
+package org.cmpn.searchengine.backend.utils;
 
 public class Url implements Comparable<Url>{
     String url;
@@ -11,6 +11,10 @@ public class Url implements Comparable<Url>{
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getUrl() {
+        return url;
     }
 
     public void setRank(Double rank) {

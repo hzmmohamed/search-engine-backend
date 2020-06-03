@@ -1,10 +1,9 @@
-package org.cmpn.searchengine.backend;
+package org.cmpn.searchengine.backend.utils;
 
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static java.lang.StrictMath.log;
 
@@ -37,7 +36,8 @@ public class Ranker {
 
                 double headerFactor =newWord.titleCount*2 + newWord.h1Count+0.5*newWord.h2Count+0.25*newWord.h3Count+0.125*newWord.h4Count+0.01*newWord.h5Count+0.001*newWord.h6Count;
                 double linkRank =linksRank.get(link);
-                double linkNewRank = headerFactor +newWord.termFrequency*IDF+linkRank;
+                double timeFactor = TimeFactor(newWord.pubDate);
+                double linkNewRank = headerFactor +newWord.termFrequency*IDF+linkRank+ timeFactor ;
                 if (newWord.country == loc)
                 {
                     linkNewRank=linkNewRank+1;
@@ -75,7 +75,6 @@ public class Ranker {
                 Url.setRank(linkNewRank);
             }
         }
-
 
         Collections.sort(ArrangedLinks);
 
@@ -116,6 +115,44 @@ public class Ranker {
             allLinks = DBConnect.getAllLinks();
           }
         System.out.println("A7la RankingS");
+
+    }
+
+    private static double TimeFactor (String PubDate)
+    {
+        if (PubDate == "not found")
+        {
+            return 0.0;
+        }
+        Date today = new Date(); // Fri Jun 17 14:54:28 PDT 2016
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(today);
+        int currentYear = cal.get(Calendar.YEAR);
+        Pattern p = Pattern.compile("[21][980][0-9][0-9]");
+        Matcher m = p.matcher(PubDate);
+        if (m.find()) {
+            String s = m.group();
+            int pupYear= Integer.parseInt(s);
+            int Difference =  currentYear- pupYear  ;
+            if (Difference==0)
+            {
+                return 3.0;
+            }
+            else if (Difference>30)
+            {
+                return (-(Difference)/30);
+            }
+            else
+            {
+                return (3.0/(Difference));
+            }
+
+
+        }
+        else
+        {
+            return 0.0;
+        }
 
     }
     /*

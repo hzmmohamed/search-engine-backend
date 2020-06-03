@@ -1,4 +1,4 @@
-package org.cmpn.searchengine.backend;
+package org.cmpn.searchengine.backend.trends;
 
 import edu.stanford.nlp.pipeline.CoreDocument;
 import edu.stanford.nlp.pipeline.CoreEntityMention;
@@ -27,7 +27,6 @@ public class Trends {
 
         @Override
         public void run() {
-            System.out.println("new thread");
             final List<CoreEntityMention> entities = extractEntitiesFromQuery(query);
             try {
                 saveEntitiesToDatabase(entities);
@@ -48,7 +47,6 @@ public class Trends {
         return document.entityMentions();
     }
     private synchronized void saveEntitiesToDatabase(List<CoreEntityMention> entities) throws SQLException {
-        System.out.println("started saving");
         // Update the rank of entities already existent in the database. And insert the new entities with count = 1.
         for(CoreEntityMention entity : entities) {
             final String entityName = entity.text();
@@ -65,7 +63,6 @@ public class Trends {
                 this.st.executeUpdate("INSERT INTO `trends`(`entity`, `type`, `count`) VALUES ('" + entityName + "', '" + entityType + "', 1)");
             }
         }
-        System.out.println("finished saving");
 
     }
 

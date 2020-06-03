@@ -1,9 +1,11 @@
-package org.cmpn.searchengine.backend;
+package org.cmpn.searchengine.backend.search;
 
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.pipeline.CoreDocument;
 import edu.stanford.nlp.pipeline.CoreEntityMention;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
+import org.cmpn.searchengine.backend.trends.Trends;
+import org.cmpn.searchengine.backend.utils.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,12 +27,12 @@ public class SearchController {
                                         @RequestParam(value = "page", defaultValue = "1") Integer page,
                                          @RequestParam(value = "phrase", defaultValue = "false") Boolean phraseSearch) throws SQLException {
 
-
+        System.out.println("/search/pages Route received a request with query:" + query);
         // trends
         new Trends(DBConnect.st).updateTrends(query);
 
         HashMap<String,ArrayList<String>> wordLinks = new HashMap<String, ArrayList<String>>();
-        HashMap<String,Word> linkData = new HashMap<String,Word>();
+        HashMap<String, Word> linkData = new HashMap<String,Word>();
         HashMap<String,ArrayList<String>> LinksDescription = new HashMap<String,ArrayList<String>>();
         QueryProcessor qProcessor = new QueryProcessor();
         Ranker ranker = new Ranker();
@@ -45,7 +47,7 @@ public class SearchController {
         ArrayList<Url> rankedResults = ranker.WordRanking(words,query,wordLinks,linkData,allLinks, numberOfWebs,loc);
         ArrayList<String> allResults = new ArrayList<>();
         for (Url res : rankedResults) {
-            allResults.add(res.url);
+            allResults.add(res.getUrl());
         }
         List<String> results = new ArrayList<String>();
          int n = allResults.size();

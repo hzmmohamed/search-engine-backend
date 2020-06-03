@@ -1,4 +1,4 @@
-package org.cmpn.searchengine.backend;
+package org.cmpn.searchengine.backend.utils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

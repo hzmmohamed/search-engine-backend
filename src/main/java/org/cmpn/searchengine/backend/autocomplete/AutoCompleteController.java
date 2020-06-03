@@ -1,4 +1,4 @@
-package org.cmpn.searchengine.backend;
+package org.cmpn.searchengine.backend.autocomplete;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,10 +13,9 @@ public class AutoCompleteController {
     @GetMapping("/api/autocomplete")
     @CrossOrigin
     public ArrayList<String> getResults(@RequestParam(value = "q", defaultValue = "") String query ) {
-        ArrayList<String> suggestions = new ArrayList<String>();
-        suggestions.add("one");
-        suggestions.add("two");
-        suggestions.add("three");
+
+        System.out.println("/autocomplete Route received a request with query:" + query);
+        ArrayList<String> suggestions = new ArrayList<>();
         return suggestions;
     }
 }

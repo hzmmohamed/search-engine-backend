@@ -1,4 +1,4 @@
-package org.cmpn.searchengine.backend;
+package org.cmpn.searchengine.backend.utils;
 public class Word implements Comparable<Word> {
     String url;
     String title;
