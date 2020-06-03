@@ -1,5 +1,6 @@
 package org.cmpn.searchengine.backend;
 
+import org.cmpn.searchengine.backend.utils.DBConnect;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
