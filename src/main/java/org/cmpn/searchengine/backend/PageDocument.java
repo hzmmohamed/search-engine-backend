@@ -1,11 +1,11 @@
 package org.cmpn.searchengine.backend;
 
-public class Document {
+public class PageDocument {
     private String title;
     private String url;
     private String textToShow;
 
-    public Document(String title, String url, String textToShow) {
+    public PageDocument(String title, String url, String textToShow) {
         this.title = title;
         this.url = url;
         this.textToShow = textToShow;
