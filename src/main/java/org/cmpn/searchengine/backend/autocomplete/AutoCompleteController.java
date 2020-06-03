@@ -16,6 +16,9 @@ public class AutoCompleteController {
 
         System.out.println("/autocomplete Route received a request with query:" + query);
         ArrayList<String> suggestions = new ArrayList<>();
+        suggestions.add("one");
+        suggestions.add("two");
+        suggestions.add("three");
         return suggestions;
     }
 }
